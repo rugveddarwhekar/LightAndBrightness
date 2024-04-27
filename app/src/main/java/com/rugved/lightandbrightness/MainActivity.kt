@@ -91,16 +91,15 @@ class MainActivity : AppCompatActivity() {
         file.appendText("$data, $time, $lightValue, $brightnessValue\n")
     }
 
-    private fun getScreenBrightness(): Int {
+    private fun getScreenBrightness(): Double {
         val contentResolver = applicationContext.contentResolver
-        //val brightness: Float = Settings.System.getFloat(contentResolver, Settings.System.SCREEN_BRIGHTNESS)
-        val brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS)
+        val brightness = Settings.System.getFloat(contentResolver, Settings.System.SCREEN_BRIGHTNESS)
         val maxBrightness = 255.0f
         val minBrightness = 0.0f
-        val linearGamma = convertLinearToGammaFloat(brightness.toFloat(), minBrightness, maxBrightness)
+        val linearGamma = convertLinearToGammaFloat(brightness, minBrightness, maxBrightness)
         val result = getPercentage(linearGamma.toDouble(), gammaSpaceMin, gammaSpaceMax)
         //val percentage = brightnessToPercentage(brightness, maxBrightness)
-        return result.toInt()
+        return result
     }
 
     private fun convertLinearToGammaFloat(`val`: Float, min: Float, max: Float): Int {
